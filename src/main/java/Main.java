@@ -2,33 +2,31 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Meal defaultMeal = new Meal();
-        System.out.println(defaultMeal.toString());
+        Item coke = new Item("drink", "cake", 1.50);
+        coke.printItem();
+        coke.setSize(("LARGE"));
+        coke.printItem();
 
-        Burger cheeseBurger = new Burger("Cheeseburger", 10);
-        cheeseBurger.addTopping("Salad");
-        cheeseBurger.addTopping("Tomato");
-        cheeseBurger.addTopping("Bacon");
-        cheeseBurger.addTopping("Egg");
-        Drink smallCoke = new Drink();
-        SideItem fries = new SideItem();
-        Meal otherMeal = new Meal(cheeseBurger, smallCoke, fries);
-        System.out.println(otherMeal.toString());
+        Item avocado = new Item("Topping", "avocado", 1.50);
+        avocado.printItem();
 
-        Burger deluxeBurger = new Burger("Deluxe Burger", 10);
-        deluxeBurger.addTopping("Salad");
-        deluxeBurger.addTopping("Tomato");
-        deluxeBurger.addTopping("Bacon");
-        deluxeBurger.addTopping("Egg");
-        deluxeBurger.addTopping("Mushrooms");
-        Meal deluxeMeal = new Meal(deluxeBurger, smallCoke, fries);
-        System.out.println(deluxeMeal.toString());
+        Burger burger = new Burger("regular", 4.00);
+        burger.addToppings("BACON", "CHEESE", "MAYO");
+        burger.printItem();
 
-        smallCoke.setSize("big");
-        System.out.println(deluxeMeal.toString());
+        MealOrder regularMeal = new MealOrder();
+        regularMeal.addBurgerToppings("BACON", "CHEESE", "MAYO");
+        regularMeal.setDrinkSize("LARGE");
+        regularMeal.printItemizedList();
 
-        System.out.println(defaultMeal.getPrice());
-        System.out.println(otherMeal.getPrice());
-        System.out.println(deluxeMeal.getPrice());
+        MealOrder secondMeal = new MealOrder("turkey", "7-up", "chili");
+        secondMeal.addBurgerToppings("LETTUCE", "CHEESE", "MAYO");
+        secondMeal.setDrinkSize("SMALL");
+        secondMeal.printItemizedList();
+
+        MealOrder deluxeMeal = new MealOrder("deluxe", "7-up", "chili");
+        deluxeMeal.addBurgerToppings("AVOCADO", "BACON", "LETTUCE", "CHEESE", "MAYO");
+        deluxeMeal.setDrinkSize("SMALL");
+        deluxeMeal.printItemizedList();
     }
 }

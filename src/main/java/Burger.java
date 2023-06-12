@@ -1,56 +1,59 @@
-public class Burger {
+public class Burger extends Item {
 
-    private String type;
-    private double price;
-    private String topping1 = null;
-    private String topping2 = null;
-    private String topping3 = null;
-    private String topping4 = null;
-    private String topping5 = null;
+    private Item extra1;
+    private Item extra2;
+    private Item extra3;
 
-    public Burger() {
-        type = "Regular burger";
-        price = 5d;
-    }
-
-    public Burger(String type, double price) {
-        this.type = type;
-        this.price = type.equals("Deluxe Burger") ? 8d : price;
+    public Burger(String name, double price) {
+        super("Burger", name, price);
     }
 
 
 
-    public void addTopping(String topping) {
-        if (topping1 == null) {
-            topping1 = topping;
-            price += type.equals("Deluxe Burger") ? 0 : 5;
-        } else if (topping2 == null) {
-            topping2 = topping;
-            price += type.equals("Deluxe Burger") ? 0 : 10;
-        } else if (topping3 == null) {
-            topping3 = topping;
-            price += type.equals("Deluxe Burger") ? 0 : 15;
-        } else if (topping4 == null && type.equals("Deluxe Burger")) {
-            topping4 = topping;
-        } else if (topping5 == null && type.equals("Deluxe Burger")) {
-            topping5 = topping;
-        } else {
-            System.out.println("The burger already has three toppings.");
+    @Override
+    public String getName() {
+        return super.getName() + " BURGER";
+    }
+
+    @Override
+    public double getAdjustedPrice() {
+        return getBasePrice()
+                + ((extra1 == null) ? 0 : extra1.getAdjustedPrice())
+                + ((extra2 == null) ? 0 : extra2.getAdjustedPrice())
+                + ((extra3 == null) ? 0 : extra3.getAdjustedPrice());
+    }
+
+    public double getExtraPrice(String toppingName) {
+        return switch (toppingName.toUpperCase()) {
+            case "AVOCADO", "CHEESE" -> 1.0;
+            case "BACON", "HAM", "SALAMI" -> 1.5;
+            default -> 0.0;
+        };
+    }
+
+    public void addToppings(String extra1, String extra2, String extra3) {
+        this.extra1 = new Item("TOPPING", extra1, getExtraPrice(extra1));
+        this.extra2 = new Item("TOPPING", extra2, getExtraPrice(extra2));
+        this.extra3 = new Item("TOPPING", extra3, getExtraPrice(extra3));
+    }
+
+    public void printItemizedList() {
+        printItem("BASE BURGER", getBasePrice());
+        if (extra1 != null) {
+            extra1.printItem();
+        }
+        if (extra2 != null) {
+            extra2.printItem();
+        }
+        if (extra3 != null) {
+            extra3.printItem();
         }
     }
 
     @Override
-    public String toString() {
-        return "Burger{" +
-                "type='" + type + '\'' +
-                ", price=" + price +
-                ", topping1='" + topping1 + '\'' +
-                ", topping2='" + topping2 + '\'' +
-                ", topping3='" + topping3 + '\'' +
-                '}';
-    }
-
-    public double getPrice() {
-        return price;
+    public void printItem() {
+        printItemizedList();
+        System.out.println("-".repeat(30));
+        super.printItem();
     }
 }
